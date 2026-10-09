@@ -8,13 +8,13 @@ import { SubjectsSection } from './components/sections/SubjectsSection';
 import { HowItWorksSection } from './components/sections/HowItWorksSection';
 import { TestimonialsSection } from './components/sections/TestimonialsSection';
 import { FAQSection } from './components/sections/FAQSection';
+import { ContactSection } from './components/sections/ContactSection';
 
 export default function App() {
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <Header />
-      
-      <main style={{ flex: 1, marginTop: '80px' }}>
+      <main style={{ flex: 1, paddingTop: '80px' }}>
         <HeroSection />
         <AboutSection />
         <ServicesSection />
@@ -22,8 +22,8 @@ export default function App() {
         <HowItWorksSection />
         <TestimonialsSection />
         <FAQSection />
+        <ContactSection />
       </main>
-
       <Footer />
       <WhatsAppButton />
     </div>
