@@ -19,7 +19,6 @@ const svgBase = {
   'aria-hidden': true,
 };
 
-// Scoped styles live in this file so the component stays a single copy-paste.
 const css = `
 .ftr {
   position: relative;
@@ -31,7 +30,7 @@ const css = `
     radial-gradient(ellipse 60% 50% at 50% 0%, rgba(201, 162, 39, 0.14), transparent 65%),
     var(--navy-dark);
 }
-/* Gold edge along the top */
+
 .ftr::before {
   content: "";
   position: absolute;
@@ -39,7 +38,7 @@ const css = `
   height: 4px;
   background: linear-gradient(90deg, transparent, var(--gold), #F1D77A, var(--gold), transparent);
 }
-/* Faint grid */
+
 .ftr::after {
   content: "";
   position: absolute;
@@ -53,7 +52,6 @@ const css = `
   mask-image: radial-gradient(ellipse at top, #000 15%, transparent 70%);
 }
 
-/* Reveal on scroll */
 .ftr__reveal { opacity: 0; }
 .ftr--visible .ftr__reveal {
   opacity: 1;
@@ -71,17 +69,17 @@ const css = `
 }
 
 /* Brand */
-.ftr__brand { display: inline-flex; align-items: center; gap: 0.7rem; margin-bottom: 0.9rem; }
-.ftr__mark {
-  display: grid;
-  place-items: center;
-  width: 42px; height: 42px;
-  border-radius: 11px;
-  background: linear-gradient(135deg, #E3BC3B, var(--gold));
-  color: var(--navy-dark);
-  font-size: 1.15rem;
-  font-weight: 800;
+.ftr__brand { display: inline-flex; align-items: center; gap: 0.75rem; margin-bottom: 0.9rem; }
+.ftr__logo {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  object-fit: cover;
+  border: 2px solid var(--gold);
+  transition: transform 0.3s ease;
 }
+.ftr__brand:hover .ftr__logo { transform: rotate(-6deg) scale(1.05); }
 .ftr__name { margin: 0; color: var(--gold); font-size: 1.2rem; line-height: 1.2; }
 .ftr__tag { margin: 0 0 1.25rem; color: #94A3B8; font-size: 0.92rem; line-height: 1.7; }
 
@@ -101,7 +99,6 @@ const css = `
 }
 .ftr__wa:hover { transform: translateY(-3px); background: #1FB95A; box-shadow: 0 10px 24px rgba(37, 211, 102, 0.45); }
 
-/* Column headings with a short gold underline */
 .ftr__h {
   position: relative;
   margin: 0 0 1.4rem;
@@ -118,7 +115,6 @@ const css = `
   background: linear-gradient(90deg, var(--gold), #F1D77A);
 }
 
-/* Quick links */
 .ftr__links { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.35rem; }
 .ftr__link {
   display: inline-flex;
@@ -140,7 +136,6 @@ const css = `
 .ftr__link:hover { color: var(--gold); transform: translateX(2px); }
 .ftr__link:hover::before { width: 14px; }
 
-/* Contact rows */
 .ftr__contact { display: grid; gap: 0.9rem; }
 .ftr__row {
   display: flex;
@@ -172,7 +167,6 @@ a.ftr__row:hover .ftr__icon {
 .ftr__label { display: block; font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: #64748B; }
 .ftr__value { display: block; margin-top: 0.1rem; color: #CBD5E1; font-weight: 600; overflow-wrap: anywhere; }
 
-/* Bottom bar */
 .ftr__bottom {
   max-width: 1200px;
   margin: 3.25rem auto 0;
@@ -210,7 +204,7 @@ a.ftr__row:hover .ftr__icon {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .ftr__wa, .ftr__link, .ftr__link::before, .ftr__icon, .ftr__top, .ftr__top svg { transition: none; }
+  .ftr__wa, .ftr__link, .ftr__link::before, .ftr__icon, .ftr__logo, .ftr__top, .ftr__top svg { transition: none; }
   .ftr__reveal, .ftr--visible .ftr__reveal { opacity: 1; transform: none; animation: none; }
 }
 `;
@@ -219,7 +213,6 @@ export const Footer: React.FC = () => {
   const ref = useRef<HTMLElement>(null);
   const [visible, setVisible] = useState(() => typeof IntersectionObserver === 'undefined');
 
-  // Trigger the entrance animation when the footer scrolls into view
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
@@ -247,7 +240,11 @@ export const Footer: React.FC = () => {
         {/* Brand Overview */}
         <div className="ftr__reveal" style={d('0.05s')}>
           <div className="ftr__brand">
-            <span className="ftr__mark" aria-hidden="true">S</span>
+            <img
+              src="/smarts_logo.jpeg"
+              alt="Smarts Academic Services Logo"
+              className="ftr__logo"
+            />
             <h3 className="ftr__name">{site.name}</h3>
           </div>
           <p className="ftr__tag">{site.tagline}</p>
