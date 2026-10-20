@@ -1,7 +1,7 @@
 import React from 'react';
 import { site, whatsappLink } from '../../config/site';
 
-// Scoped styles live in this file so the component stays a single copy-paste.
+
 const css = `
 .hero-x {
   position: relative;
