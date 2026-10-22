@@ -12,7 +12,6 @@ const navLinks = [
   { name: 'Contact', href: '#contact' },
 ];
 
-// Scoped styles live in this file so the component stays a single copy-paste.
 const css = `
 .hdr {
   position: fixed;
@@ -27,7 +26,7 @@ const css = `
   transition: height 0.3s ease, background 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease;
   animation: hdr-drop 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
 }
-/* Compact, frosted look once the visitor scrolls */
+
 .hdr--scrolled {
   height: 64px;
   background: rgba(11, 37, 69, 0.9);
@@ -59,18 +58,21 @@ const css = `
   white-space: nowrap;
   min-width: 0;
 }
-.hdr__mark {
-  display: grid;
-  place-items: center;
+
+.hdr__logo {
   flex: none;
-  width: 38px; height: 38px;
-  border-radius: 10px;
-  background: linear-gradient(135deg, #E3BC3B, var(--gold));
-  color: var(--navy-dark);
-  font-weight: 800;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 2px solid var(--gold);
   transition: transform 0.3s ease;
 }
-.hdr__brand:hover .hdr__mark { transform: rotate(-8deg) scale(1.06); }
+
+.hdr__brand:hover .hdr__logo {
+  transform: rotate(-5deg) scale(1.05);
+}
+
 .hdr__name { overflow: hidden; text-overflow: ellipsis; }
 
 /* Desktop nav */
@@ -197,7 +199,7 @@ const css = `
 @media (max-width: 360px) { .hdr__name { display: none; } }
 
 @media (prefers-reduced-motion: reduce) {
-  .hdr, .hdr__panel, .hdr__burger span, .hdr__link::after, .hdr__mark, .hdr__cta { animation: none; transition: none; }
+  .hdr, .hdr__panel, .hdr__burger span, .hdr__link::after, .hdr__logo, .hdr__cta { animation: none; transition: none; }
 }
 `;
 
@@ -209,7 +211,6 @@ export const Header: React.FC = () => {
 
   const closeMenu = () => setIsMobileMenuOpen(false);
 
-  // Compact header + progress bar while scrolling
   useEffect(() => {
     const onScroll = () => {
       const y = window.scrollY;
@@ -222,7 +223,6 @@ export const Header: React.FC = () => {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Highlight the link for the section currently in view
   useEffect(() => {
     const sections = navLinks
       .map((l) => document.querySelector(l.href))
@@ -241,7 +241,6 @@ export const Header: React.FC = () => {
     return () => observer.disconnect();
   }, []);
 
-  // Lock page scroll and allow Escape while the mobile menu is open
   useEffect(() => {
     if (!isMobileMenuOpen) return;
     const prev = document.body.style.overflow;
@@ -256,7 +255,6 @@ export const Header: React.FC = () => {
     };
   }, [isMobileMenuOpen]);
 
-  // Close the menu if the window grows to desktop width
   useEffect(() => {
     const onResize = () => {
       if (window.innerWidth >= 1000) setIsMobileMenuOpen(false);
@@ -270,9 +268,13 @@ export const Header: React.FC = () => {
       <style>{css}</style>
 
       <div className="hdr__inner">
-        {/* Brand Wordmark */}
+        {/* Brand Logo & Title */}
         <a href="#home" className="hdr__brand" onClick={closeMenu}>
-          <span className="hdr__mark" aria-hidden="true">S</span>
+          <img
+            src="/smarts_logo.jpeg"
+            alt="Smarts Academic Services Logo"
+            className="hdr__logo"
+          />
           <span className="hdr__name">{site.name}</span>
         </a>
 
@@ -304,7 +306,7 @@ export const Header: React.FC = () => {
         </button>
       </div>
 
-      {/* Mobile panel: links, Request CTA and WhatsApp stay one tap away */}
+      {/* Mobile panel */}
       <div
         id="mobile-panel"
         className={`hdr__panel ${isMobileMenuOpen ? 'hdr__panel--open' : ''}`}

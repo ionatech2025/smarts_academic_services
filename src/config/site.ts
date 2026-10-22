@@ -1,5 +1,5 @@
 export const site = {
-  name: "Smarts Academic Services",
+  name: "Docta Smarts Academic Services",
   tagline: "Professional Online Academic Services for College & University Students",
   phone: "+256 754 925 915",
   email: "matovui559@gmail.com",
