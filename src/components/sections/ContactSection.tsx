@@ -92,7 +92,6 @@ const WaIcon = ({ size = 22 }: { size?: number }) => (
   </svg>
 );
 
-// Scoped styles live in this file so the component stays a single copy-paste.
 const css = `
 .cnt {
   position: relative;
@@ -105,7 +104,6 @@ const css = `
 }
 .cnt__inner { position: relative; max-width: 1100px; margin: 0 auto; }
 
-/* Reveal on scroll (animation, so hover transforms keep working afterwards) */
 .cnt__reveal { opacity: 0; }
 .cnt--visible .cnt__reveal {
   opacity: 1;
@@ -114,7 +112,6 @@ const css = `
 }
 @keyframes cnt-rise { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
 
-/* Heading */
 .cnt__head { text-align: center; margin-bottom: 3.25rem; }
 .cnt__eyebrow {
   display: inline-block;
@@ -150,7 +147,6 @@ const css = `
 .cnt__grid { display: grid; grid-template-columns: 1fr; gap: 2rem; align-items: start; }
 @media (min-width: 900px) { .cnt__grid { grid-template-columns: 0.85fr 1.15fr; gap: 2.5rem; } }
 
-/* ---------- Direct contact panel ---------- */
 .cnt__info {
   position: relative;
   overflow: hidden;
@@ -233,7 +229,6 @@ a.cnt__item:hover {
 }
 .cnt__wa:hover { transform: translateY(-3px); background: #1FB95A; box-shadow: 0 12px 28px rgba(37, 211, 102, 0.5); }
 
-/* ---------- Form card ---------- */
 .cnt__card {
   position: relative;
   padding: 2.25rem 2rem 2rem;
@@ -284,7 +279,6 @@ a.cnt__item:hover {
 .cnt__err { margin: 0.4rem 0 0; color: #DC2626; font-size: 0.82rem; animation: cnt-shake 0.35s ease; }
 @keyframes cnt-shake { 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }
 
-/* Honeypot: hidden from people, visible to bots */
 .cnt__hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
 
 .cnt__submit {
@@ -320,7 +314,6 @@ a.cnt__item:hover {
 
 .cnt a:focus-visible, .cnt button:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
 
-/* Error banner with fallbacks */
 .cnt__fail {
   padding: 1rem 1.1rem;
   border-radius: var(--radius);
@@ -347,7 +340,6 @@ a.cnt__item:hover {
 }
 .cnt__chip:hover { background: #FEE2E2; }
 
-/* ---------- Success state ---------- */
 .cnt__ok { text-align: center; padding: 1rem 0 0.5rem; }
 .cnt__check {
   display: grid;
@@ -421,7 +413,6 @@ export const ContactSection: React.FC = () => {
   const ref = useRef<HTMLElement>(null);
   const [visible, setVisible] = useState(false);
 
-  // Trigger the entrance animation when the section scrolls into view
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
@@ -460,7 +451,6 @@ export const ContactSection: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Show every error at once if the form isn't valid yet
     if (Object.keys(errors).length > 0) {
       setTouched({
         name: true, email: true, phone: true, service: true,
@@ -471,7 +461,6 @@ export const ContactSection: React.FC = () => {
       return;
     }
 
-    // Bots tick the hidden box; pretend success and send nothing
     if (honeypot) {
       setStatus('success');
       return;
@@ -484,8 +473,7 @@ export const ContactSection: React.FC = () => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify({
-          access_key: import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || 'YOUR_WEB3FORMS_ACCESS_KEY',
-          // Email subject line. (The course goes in "course" so it can't overwrite this.)
+          access_key: import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || '99dfd6e3-fe79-440e-8c4f-b5b5d66fb7db',
           subject: `New Service Request from ${formData.name.trim()}`,
           from_name: site.name,
           name: formData.name.trim(),
@@ -773,7 +761,7 @@ export const ContactSection: React.FC = () => {
                     {err('message')}
                   </div>
 
-                  {/* Spam trap: real visitors never see or tick this */}
+                  {/* Spam trap */}
                   <input
                     type="checkbox"
                     name="botcheck"
